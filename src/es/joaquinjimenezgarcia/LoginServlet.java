@@ -23,7 +23,6 @@ import com.sun.istack.internal.logging.Logger;
  */
 public class LoginServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	// Pool de conexiones a la base de datos
 	private DataSource pool;
 
 	/**
@@ -86,10 +85,10 @@ public class LoginServlet extends HttpServlet {
 						session.setAttribute("usuario", usuario);
 					}
 					out.println("<p>Hola, " + usuario + "!</p>");
-					out.println("<p><a href='libros'>Libros</a></p>");
-					out.println("<p><a href='autores'>Autores</a></p>");
-					out.println("<p><a href='editoriales'>Editoriales</a></p>");
-					out.println("<p><a href='pedidos'>Pedidos</a></p>");
+					out.println("<p><a href='libros.html'>Libros</a></p>");
+					out.println("<p><a href='autores.html'>Autores</a></p>");
+					out.println("<p><a href='editoriales.html'>Editoriales</a></p>");
+					out.println("<p><a href='pedidos.html'>Pedidos</a></p>");
 				}
 			}
 			out.println("</body>");

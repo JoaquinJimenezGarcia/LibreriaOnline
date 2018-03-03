@@ -13,6 +13,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import javax.sql.DataSource;
 
 import com.mysql.jdbc.Connection;
@@ -51,44 +52,69 @@ public class MostrarLibrosServlet extends HttpServlet {
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		response.setContentType("text/html");
-		// Creamos un objeto para poder escribir la respuesta
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		response.setContentType("text/html;charset=UTF-8");
 		PrintWriter out = response.getWriter();
-		// Creamos objetos para la conexión
 		Connection conn = null;
 		Statement stmt = null;
 		
 		try {
-			stmt = (Statement) conn.createStatement();
-			// Paso 4: Ejecutar las sentencias
-			String sqlStr = "SELECT * FROM Libros";
-			// Generar una página HTML como resultado de la consulta
 			out.println("<html>");
-			out.println("<head><title>Resultado</title></head>");
+			out.println("<head>");
+			out.println("<title>Libros</title>");
+			out.println("</head>");
 			out.println("<body>");
-			out.println("<h3>Su consulta</h3>");
-			out.println("<p>Tu consulta es: " + sqlStr + "</p>");
-			ResultSet rs = stmt.executeQuery(sqlStr);
-			// Paso 5: Recoger los resultados y procesarlos
-			int count = 0;
-			while (rs.next()) {
-				out.println("<p>" + rs.getString("autorLibro") + ",");
-				out.println(rs.getString("tituloLibro") + ",");
-				out.println(rs.getString("precioLibro") + ",");
-				out.println(rs.getString("cantidadLibro") + "</p>");
-				count++;
+			out.println("<h2>�Qu� desea hacer?</h2>");
+			// Recuperar el nombre de usuario
+			String usuario;
+			HttpSession session = request.getSession(false);
+			if (session == null) {
+				out.println("<h3>No has iniciado sesión</h3>");
+			} else {
+				synchronized (session) {
+				usuario = (String) session.getAttribute("usuario");
 			}
-			out.println("<p>" + count + " registros encontrados.</p>");
-			out.println("<a href=\"ConsultaLibros.html\">Volver</a>");
+				out.println("<table>");
+				out.println("<tr>");
+				out.println("<td>Usuario:</td>");
+				out.println("<td>" + usuario + "</td>");
+				out.println("</tr>");
+				out.println("</table>");
+				out.println("<p><a href='logout'>Salir</a></p>");
+				
+				try {
+					stmt = (Statement) conn.createStatement();
+					// Paso 4: Ejecutar las sentencias
+					String sqlStr = "SELECT TituloLibro, PrecioLibro, CantidadLibro FROM Libro";
+					// Generar una página HTML como resultado de la consulta
+					out.println("<html>");
+					out.println("<head><title>Resultado</title></head>");
+					out.println("<body>");
+					out.println("<h3>Su consulta</h3>");
+					out.println("<p>Tu consulta es: " + sqlStr + "</p>");
+					ResultSet rs = stmt.executeQuery(sqlStr);
+					// Paso 5: Recoger los resultados y procesarlos
+					int count = 0;
+					while (rs.next()) {
+						out.println("<p>" + rs.getString("TituloLibro") + ",");
+						out.println(rs.getString("PrecioLibro") + ",");
+						out.println(rs.getString("CantidadLibro") + "</p>");
+						count++;
+					}
+					out.println("<p>" + count + " registros encontrados.</p>");
+					out.println("<a href=\"ConsultaLibros.html\">Volver</a>");
+				} catch (Exception ex) {
+					ex.printStackTrace();
+					out.println("<h3>" + ex + "</h3>");
+				}
+			}
 			out.println("</body>");
 			out.println("</html>");
-		} catch (Exception ex) {
-			ex.printStackTrace();
-		}finally {
-			// Cerramos el flujo de escritura
+		} finally {
+			// Cerramos objetos
 			out.close();
+			
 			try {
 				// Cerramos el resto de recursos
 				if (stmt != null) {
@@ -101,6 +127,7 @@ public class MostrarLibrosServlet extends HttpServlet {
 				ex.printStackTrace();
 			}
 		}
+		response.getWriter().append("Served at: ").append(request.getContextPath());
 	}
 
 	/**
