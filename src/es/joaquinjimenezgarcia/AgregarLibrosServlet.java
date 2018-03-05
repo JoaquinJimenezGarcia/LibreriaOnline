@@ -39,10 +39,9 @@ public class AgregarLibrosServlet extends HttpServlet {
 
     public void init(ServletConfig config) throws ServletException {
 		try {
-			// Crea un contecto para poder luego buscar el recurso DataSource
 			InitialContext ctx = new InitialContext();
-			// Busca el recurso DataSource en el contexto
 			pool = (DataSource) ctx.lookup("java:comp/env/jdbc/LibreriaOnline");
+			
 			if (pool == null) {
 				throw new ServletException("DataSource desconocida'mysql_tiendalibros'");
 			}
@@ -59,8 +58,10 @@ public class AgregarLibrosServlet extends HttpServlet {
 			throws ServletException, IOException {
     	response.setContentType("text/html;charset=UTF-8");
 		PrintWriter out = response.getWriter();
+		
 		Connection conn = null;
 		Statement stmt = null;
+		
 		try {
 			out.println("<html>");
 			out.println("<head>");
@@ -68,32 +69,25 @@ public class AgregarLibrosServlet extends HttpServlet {
 			out.println("</head>");
 			out.println("<body>");
 			out.println("<h2>Panel Administraci�n</h2>");
-			// Obtener una conexión del pool
+			
 			conn = pool.getConnection();
 			stmt = conn.createStatement();
-			// Recuperar los parámetros usuario y password de la petición request
+			
 			String titulo = request.getParameter("titulo");
 			String precio = request.getParameter("precio");
 			String cantidad = request.getParameter("cantidad");
 			String idAutor = request.getParameter("idAutor");
 			String idEditorial = request.getParameter("idEditorial");
 			
-			// Verificar que existe el usuario y su correspondiente clave
 			StringBuilder sqlStr = new StringBuilder();
-			/*sqlStr.append("INSERT INTO Libro VALUES(null, '" + titulo + "',"
-					+ "'"+ precio + "', "
-					+ "'"+ cantidad + "', "
-					+ "'"+ idAutor + "', "
-					+ "'" + idEditorial + "'");*/
 			sqlStr.append("INSERT INTO Libro VALUES(null, '")
 				.append(titulo).append("','")
 				.append(precio).append("','")
 				.append(cantidad).append("','")
 				.append(idAutor).append("','")
 				.append(idEditorial).append("')");
-			System.out.println(sqlStr);
+		
 			if (stmt.executeUpdate(sqlStr.toString())==-1) {
-				// Si el resultset no está vacío
 				out.println("<h3>Error insertando datos en la Base de Datos</h3>");
 				out.println("<p><a href='libros.html'>Volver</a></p>");
 			} else {
@@ -105,25 +99,26 @@ public class AgregarLibrosServlet extends HttpServlet {
 			out.println("</html>");
 		} catch (SQLException ex) {
 			out.println("<p>Servicio no disponible</p>");
-			out.println(ex);
 			out.println("</body>");
 			out.println("</html>");
+			
 			Logger.getLogger(LoginServlet.class.getName(), null).log(Level.SEVERE, null, ex);
 		} finally {
-			// Cerramos objetos
 			out.close();
+			
 			try {
 				if (stmt != null) {
 					stmt.close();
 				}
+				
 				if (conn != null) {
-					// Esto devolvería la conexión al pool
 					conn.close();
 				}
 			} catch (SQLException ex) {
 				Logger.getLogger(LoginServlet.class.getName(), null).log(Level.SEVERE, null, ex);
 			}
 		}
+		
 		response.getWriter().append("Served at: ").append(request.getContextPath());
 	}
 

@@ -40,10 +40,9 @@ public class MostrarLibrosServlet extends HttpServlet {
     
     public void init(ServletConfig config) throws ServletException {
 		try {
-			// Crea un contecto para poder luego buscar el recurso DataSource
 			InitialContext ctx = new InitialContext();
-			// Busca el recurso DataSource en el contexto
 			pool = (DataSource) ctx.lookup("java:comp/env/jdbc/LibreriaOnline");
+			
 			if (pool == null) {
 				throw new ServletException("DataSource desconocida'mysql_tiendalibros'");
 			}
@@ -59,6 +58,7 @@ public class MostrarLibrosServlet extends HttpServlet {
 			throws ServletException, IOException {
 		response.setContentType("text/html;charset=UTF-8");
 		PrintWriter out = response.getWriter();
+		
 		Connection conn = null;
 		Statement stmt = null;
 		
@@ -72,15 +72,17 @@ public class MostrarLibrosServlet extends HttpServlet {
 			out.println("</head>");
 			out.println("<body>");
 			out.println("<h2>¿Qué desea hacer?</h2>");
-			// Recuperar el nombre de usuario
+		
 			String usuario;
 			HttpSession session = request.getSession(false);
+		
 			if (session == null) {
 				out.println("<h3>No has iniciado sesión</h3>");
 			} else {
 				synchronized (session) {
-				usuario = (String) session.getAttribute("usuario");
-			}
+					usuario = (String) session.getAttribute("usuario");
+				}
+				
 				out.println("<table>");
 				out.println("<tr>");
 				out.println("<td>Usuario:</td>");
@@ -91,15 +93,15 @@ public class MostrarLibrosServlet extends HttpServlet {
 				
 				try {
 					stmt = (Statement) conn.createStatement();
-					// Paso 4: Ejecutar las sentencias
 					String sqlStr = "SELECT TituloLibro, PrecioLibro, CantidadLibro FROM Libro";
-					// Generar una pÃ¡gina HTML como resultado de la consulta
+					
 					out.println("<html>");
 					out.println("<head><title>Libros</title></head>");
 					out.println("<body>");
+					
 					ResultSet rs = stmt.executeQuery(sqlStr);
-					// Paso 5: Recoger los resultados y procesarlos
 					int count = 0;
+					
 					out.println("<a href=\"libros.html\">Volver</a>");
 					out.println("<table border=\"1\">");
 					out.println("<tr>");
@@ -112,6 +114,7 @@ public class MostrarLibrosServlet extends HttpServlet {
 						out.println("<tr>" + "<td>" + rs.getString("TituloLibro") + "</td>");
 						out.println("<td>" + rs.getString("PrecioLibro") + "€" + "</td>");
 						out.println("<td>" + rs.getString("CantidadLibro") + "</td>" + "</tr>");
+						
 						count++;
 					}
 					
@@ -119,26 +122,25 @@ public class MostrarLibrosServlet extends HttpServlet {
 					out.println("<p>" + count + " libros encontrados.</p>");
 				} catch (Exception ex) {
 					ex.printStackTrace();
-					out.println("<h3>" + ex + "</h3>");
 				}
 			}
+			
 			out.println("</body>");
 			out.println("</html>");
 		}catch (SQLException ex) {
 			out.println("<p>Servicio no disponible</p>");
-			out.println(ex);
 			out.println("</body>");
 			out.println("</html>");
+			
 			Logger.getLogger(LoginServlet.class.getName(), null).log(Level.SEVERE, null, ex); 
 		} finally {
-			// Cerramos objetos
 			out.close();
 			
 			try {
-				// Cerramos el resto de recursos
 				if (stmt != null) {
 					stmt.close();
 				}
+				
 				if (conn != null) {
 					conn.close();
 				}
@@ -146,6 +148,7 @@ public class MostrarLibrosServlet extends HttpServlet {
 				ex.printStackTrace();
 			}
 		}
+		
 		response.getWriter().append("Served at: ").append(request.getContextPath());
 	}
 
