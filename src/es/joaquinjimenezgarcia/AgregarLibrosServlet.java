@@ -53,102 +53,75 @@ public class AgregarLibrosServlet extends HttpServlet {
     
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 * 
 	 */
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		response.setContentType("text/html;charset=UTF-8");
+    	response.setContentType("text/html;charset=UTF-8");
 		PrintWriter out = response.getWriter();
 		Connection conn = null;
 		Statement stmt = null;
-		
 		try {
+			out.println("<html>");
+			out.println("<head>");
+			out.println("<title>Login</title>");
+			out.println("</head>");
+			out.println("<body>");
+			out.println("<h2>Panel AdministraciÛn</h2>");
+			// Obtener una conexi√≥n del pool
 			conn = pool.getConnection();
 			stmt = conn.createStatement();
-			
+			// Recuperar los par√°metros usuario y password de la petici√≥n request
 			String titulo = request.getParameter("titulo");
 			String precio = request.getParameter("precio");
 			String cantidad = request.getParameter("cantidad");
 			String idAutor = request.getParameter("idAutor");
 			String idEditorial = request.getParameter("idEditorial");
 			
-			out.println("<html>");
-			out.println("<head>");
-			out.println("<title>Libros</title>");
-			out.println("</head>");
-			out.println("<body>");
-			out.println("<h2>øQuÈ desea hacer?</h2>");
-			// Recuperar el nombre de usuario
-			String usuario;
-			HttpSession session = request.getSession(false);
-			if (session == null) {
-				out.println("<h3>No has iniciado sesiÛn</h3>");
+			// Verificar que existe el usuario y su correspondiente clave
+			StringBuilder sqlStr = new StringBuilder();
+			/*sqlStr.append("INSERT INTO Libro VALUES(null, '" + titulo + "',"
+					+ "'"+ precio + "', "
+					+ "'"+ cantidad + "', "
+					+ "'"+ idAutor + "', "
+					+ "'" + idEditorial + "'");*/
+			sqlStr.append("INSERT INTO Libro VALUES(null, '")
+				.append(titulo).append("','")
+				.append(precio).append("','")
+				.append(cantidad).append("','")
+				.append(idAutor).append("','")
+				.append(idEditorial).append("')");
+			System.out.println(sqlStr);
+			if (stmt.executeUpdate(sqlStr.toString())==-1) {
+				// Si el resultset no est√° vac√≠o
+				out.println("<h3>Error insertando datos en la Base de Datos</h3>");
+				out.println("<p><a href='libros.html'>Volver</a></p>");
 			} else {
-				synchronized (session) {
-				usuario = (String) session.getAttribute("usuario");
+				out.println("<p>AÒadido con Èxito</p>");
+				out.println("<a href=\"libros.html\">Volver</a>");
 			}
-				out.println("<table>");
-				out.println("<tr>");
-				out.println("<td>Usuario:</td>");
-				out.println("<td>" + usuario + "</td>");
-				out.println("</tr>");
-				out.println("</table>");
-				out.println("<p><a href='logout'>Salir</a></p>");
-				
-				try {
-					stmt = (Statement) conn.createStatement();
-					// Paso 4: Ejecutar las sentencias
-					String sqlStr = "SELECT TituloLibro, PrecioLibro, CantidadLibro FROM Libro";
-					// Generar una p√°gina HTML como resultado de la consulta
-					out.println("<html>");
-					out.println("<head><title>Libros</title></head>");
-					out.println("<body>");
-					ResultSet rs = stmt.executeQuery(sqlStr);
-					// Paso 5: Recoger los resultados y procesarlos
-					int count = 0;
-					out.println("<a href=\"libros.html\">Volver</a>");
-					out.println("<table border=\"1\">");
-					out.println("<tr>");
-					out.println("<th>TÌtulo</th>");
-					out.println("<th>Precio</th>");
-					out.println("<th>Cantidad</th>");
-					out.println("</tr>");
-					
-					while (rs.next()) {
-						out.println("<tr>" + "<td>" + rs.getString("TituloLibro") + "</td>");
-						out.println("<td>" + rs.getString("PrecioLibro") + "Ä" + "</td>");
-						out.println("<td>" + rs.getString("CantidadLibro") + "</td>" + "</tr>");
-						count++;
-					}
-					
-					out.println("</table>");
-					out.println("<p>" + count + " libros encontrados.</p>");
-				} catch (Exception ex) {
-					ex.printStackTrace();
-					out.println("<h3>" + ex + "</h3>");
-				}
-			}
+
 			out.println("</body>");
 			out.println("</html>");
-		}catch (SQLException ex) {
+		} catch (SQLException ex) {
 			out.println("<p>Servicio no disponible</p>");
 			out.println(ex);
 			out.println("</body>");
 			out.println("</html>");
-			Logger.getLogger(LoginServlet.class.getName(), null).log(Level.SEVERE, null, ex); 
+			Logger.getLogger(LoginServlet.class.getName(), null).log(Level.SEVERE, null, ex);
 		} finally {
 			// Cerramos objetos
 			out.close();
-			
 			try {
-				// Cerramos el resto de recursos
 				if (stmt != null) {
 					stmt.close();
 				}
 				if (conn != null) {
+					// Esto devolver√≠a la conexi√≥n al pool
 					conn.close();
 				}
-			} catch (Exception ex) {
-				ex.printStackTrace();
+			} catch (SQLException ex) {
+				Logger.getLogger(LoginServlet.class.getName(), null).log(Level.SEVERE, null, ex);
 			}
 		}
 		response.getWriter().append("Served at: ").append(request.getContextPath());
@@ -161,5 +134,4 @@ public class AgregarLibrosServlet extends HttpServlet {
 		// TODO Auto-generated method stub
 		doGet(request, response);
 	}
-
 }
