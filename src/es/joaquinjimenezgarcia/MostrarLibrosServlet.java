@@ -3,7 +3,10 @@ package es.joaquinjimenezgarcia;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.logging.Level;
+import java.sql.Connection;
+import java.sql.Statement;
 
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
@@ -16,8 +19,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.sql.DataSource;
 
-import com.mysql.jdbc.Connection;
-import com.mysql.jdbc.Statement;
+//import com.mysql.jdbc.Connection;
+//import com.mysql.jdbc.Statement;
 import com.sun.istack.internal.logging.Logger;
 
 /**
@@ -52,7 +55,7 @@ public class MostrarLibrosServlet extends HttpServlet {
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+   protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		response.setContentType("text/html;charset=UTF-8");
 		PrintWriter out = response.getWriter();
@@ -60,6 +63,9 @@ public class MostrarLibrosServlet extends HttpServlet {
 		Statement stmt = null;
 		
 		try {
+			conn = pool.getConnection();
+			stmt = conn.createStatement();
+			
 			out.println("<html>");
 			out.println("<head>");
 			out.println("<title>Libros</title>");
@@ -70,7 +76,7 @@ public class MostrarLibrosServlet extends HttpServlet {
 			String usuario;
 			HttpSession session = request.getSession(false);
 			if (session == null) {
-				out.println("<h3>No has iniciado sesi√≥n</h3>");
+				out.println("<h3>No has iniciado sesiÛn</h3>");
 			} else {
 				synchronized (session) {
 				usuario = (String) session.getAttribute("usuario");
@@ -89,21 +95,28 @@ public class MostrarLibrosServlet extends HttpServlet {
 					String sqlStr = "SELECT TituloLibro, PrecioLibro, CantidadLibro FROM Libro";
 					// Generar una p√°gina HTML como resultado de la consulta
 					out.println("<html>");
-					out.println("<head><title>Resultado</title></head>");
+					out.println("<head><title>Libros</title></head>");
 					out.println("<body>");
-					out.println("<h3>Su consulta</h3>");
-					out.println("<p>Tu consulta es: " + sqlStr + "</p>");
 					ResultSet rs = stmt.executeQuery(sqlStr);
 					// Paso 5: Recoger los resultados y procesarlos
 					int count = 0;
+					out.println("<a href=\"libros.html\">Volver</a>");
+					out.println("<table border=\"1\">");
+					out.println("<tr>");
+					out.println("<th>TÌtulo</th>");
+					out.println("<th>Precio</th>");
+					out.println("<th>Cantidad</th>");
+					out.println("</tr>");
+					
 					while (rs.next()) {
-						out.println("<p>" + rs.getString("TituloLibro") + ",");
-						out.println(rs.getString("PrecioLibro") + ",");
-						out.println(rs.getString("CantidadLibro") + "</p>");
+						out.println("<tr>" + "<td>" + rs.getString("TituloLibro") + "</td>");
+						out.println("<td>" + rs.getString("PrecioLibro") + "Ä" + "</td>");
+						out.println("<td>" + rs.getString("CantidadLibro") + "</td>" + "</tr>");
 						count++;
 					}
-					out.println("<p>" + count + " registros encontrados.</p>");
-					out.println("<a href=\"ConsultaLibros.html\">Volver</a>");
+					
+					out.println("</table>");
+					out.println("<p>" + count + " libros encontrados.</p>");
 				} catch (Exception ex) {
 					ex.printStackTrace();
 					out.println("<h3>" + ex + "</h3>");
@@ -111,6 +124,12 @@ public class MostrarLibrosServlet extends HttpServlet {
 			}
 			out.println("</body>");
 			out.println("</html>");
+		}catch (SQLException ex) {
+			out.println("<p>Servicio no disponible</p>");
+			out.println(ex);
+			out.println("</body>");
+			out.println("</html>");
+			Logger.getLogger(LoginServlet.class.getName(), null).log(Level.SEVERE, null, ex); 
 		} finally {
 			// Cerramos objetos
 			out.close();
