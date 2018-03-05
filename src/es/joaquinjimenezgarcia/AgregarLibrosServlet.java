@@ -65,6 +65,12 @@ public class AgregarLibrosServlet extends HttpServlet {
 			conn = pool.getConnection();
 			stmt = conn.createStatement();
 			
+			String titulo = request.getParameter("titulo");
+			String precio = request.getParameter("precio");
+			String cantidad = request.getParameter("cantidad");
+			String idAutor = request.getParameter("idAutor");
+			String idEditorial = request.getParameter("idEditorial");
+			
 			out.println("<html>");
 			out.println("<head>");
 			out.println("<title>Libros</title>");
