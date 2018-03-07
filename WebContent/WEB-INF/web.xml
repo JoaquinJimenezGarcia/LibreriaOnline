@@ -21,6 +21,10 @@
     <servlet-name>AgregarLibrosServlet</servlet-name>
     <servlet-class>es.joaquinjimenezgarcia.AgregarLibrosServlet</servlet-class>
   </servlet>
+  <servlet>
+    <servlet-name>AutoresServlet</servlet-name>
+    <servlet-class>es.joaquinjimenezgarcia.AutoresServlet</servlet-class>
+  </servlet>
   <servlet-mapping>
     <servlet-name>LoginServlet</servlet-name>
     <url-pattern>/login</url-pattern>
@@ -32,5 +36,9 @@
   <servlet-mapping>
     <servlet-name>AgregarLibrosServlet</servlet-name>
     <url-pattern>/agregar</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>AutoresServlet</servlet-name>
+    <url-pattern>/autores</url-pattern>
   </servlet-mapping>
 </web-app>
