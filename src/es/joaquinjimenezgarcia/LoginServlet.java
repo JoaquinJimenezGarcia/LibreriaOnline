@@ -49,7 +49,7 @@ public class LoginServlet extends HttpServlet {
 			out.println("<title>Login</title>");
 			out.println("</head>");
 			out.println("<body>");
-			out.println("<h2>Panel Administración</h2>");
+			out.println("<h2>Panel AdministraciÃ³n</h2>");
 			
 			conn = pool.getConnection();
 			stmt = conn.createStatement();
@@ -70,7 +70,7 @@ public class LoginServlet extends HttpServlet {
 				ResultSet rset = stmt.executeQuery(sqlStr.toString());
 				
 				if (!rset.next()) {
-					out.println("<h3>Nombre de usuario o contraseña incorrectos</h3>");
+					out.println("<h3>Nombre de usuario o contraseÃ±a incorrectos</h3>");
 					out.println("<p><a href='index.html'>Volver a Login</a></p>");
 				} else {
 					HttpSession session = request.getSession(false);

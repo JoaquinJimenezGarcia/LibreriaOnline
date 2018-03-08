@@ -71,13 +71,13 @@ public class MostrarLibrosServlet extends HttpServlet {
 			out.println("<title>Libros</title>");
 			out.println("</head>");
 			out.println("<body>");
-			out.println("<h2>¿Qué desea hacer?</h2>");
+			out.println("<h2>Â¿QuÃ© desea hacer?</h2>");
 		
 			String usuario;
 			HttpSession session = request.getSession(false);
 		
 			if (session == null) {
-				out.println("<h3>No has iniciado sesión</h3>");
+				out.println("<h3>No has iniciado sesiÃ³n</h3>");
 			} else {
 				synchronized (session) {
 					usuario = (String) session.getAttribute("usuario");
@@ -105,14 +105,14 @@ public class MostrarLibrosServlet extends HttpServlet {
 					out.println("<a href=\"libros.html\">Volver</a>");
 					out.println("<table border=\"1\">");
 					out.println("<tr>");
-					out.println("<th>Título</th>");
+					out.println("<th>TÃ­tulo</th>");
 					out.println("<th>Precio</th>");
 					out.println("<th>Cantidad</th>");
 					out.println("</tr>");
 					
 					while (rs.next()) {
 						out.println("<tr>" + "<td>" + rs.getString("TituloLibro") + "</td>");
-						out.println("<td>" + rs.getString("PrecioLibro") + "€" + "</td>");
+						out.println("<td>" + rs.getString("PrecioLibro") + "â‚¬" + "</td>");
 						out.println("<td>" + rs.getString("CantidadLibro") + "</td>" + "</tr>");
 						
 						count++;
