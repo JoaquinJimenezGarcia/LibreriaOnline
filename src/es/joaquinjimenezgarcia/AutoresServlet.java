@@ -76,7 +76,7 @@ public class AutoresServlet extends HttpServlet {
 			HttpSession session = request.getSession(false);
 		
 			if (session == null) {
-				out.println("<h3>No has iniciado sesión</h3>");
+				out.println("<h3>No has iniciado sesiï¿½n</h3>");
 			} else {
 				synchronized (session) {
 					usuario = (String) session.getAttribute("usuario");
@@ -101,7 +101,7 @@ public class AutoresServlet extends HttpServlet {
 					ResultSet rs = stmt.executeQuery(sqlStr);
 					int count = 0;
 					
-					out.println("<a href=\"libros.html\">Volver</a>");
+					out.println("<a href=\"autores.html\">Volver</a>");
 					out.println("<table border=\"1\">");
 					out.println("<tr>");
 					out.println("<th>ID</th>");

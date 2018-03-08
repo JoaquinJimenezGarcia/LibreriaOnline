@@ -101,7 +101,7 @@ public class EditorialesServlet extends HttpServlet {
 					ResultSet rs = stmt.executeQuery(sqlStr);
 					int count = 0;
 					
-					out.println("<a href=\"libros.html\">Volver</a>");
+					out.println("<a href=\"editoriales.html\">Volver</a>");
 					out.println("<table border=\"1\">");
 					out.println("<tr>");
 					out.println("<th>ID</th>");
