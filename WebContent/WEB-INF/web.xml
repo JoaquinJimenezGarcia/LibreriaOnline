@@ -25,6 +25,10 @@
     <servlet-name>AutoresServlet</servlet-name>
     <servlet-class>es.joaquinjimenezgarcia.AutoresServlet</servlet-class>
   </servlet>
+  <servlet>
+    <servlet-name>EditorialesServlet</servlet-name>
+    <servlet-class>es.joaquinjimenezgarcia.EditorialesServlet</servlet-class>
+  </servlet>
   <servlet-mapping>
     <servlet-name>LoginServlet</servlet-name>
     <url-pattern>/login</url-pattern>
@@ -40,5 +44,9 @@
   <servlet-mapping>
     <servlet-name>AutoresServlet</servlet-name>
     <url-pattern>/autores</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>EditorialesServlet</servlet-name>
+    <url-pattern>/editoriales</url-pattern>
   </servlet-mapping>
 </web-app>
