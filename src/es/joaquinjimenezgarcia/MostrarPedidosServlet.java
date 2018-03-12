@@ -108,10 +108,24 @@ public class MostrarPedidosServlet extends HttpServlet {
 					out.println("<th>Libro</th>");
 					out.println("</tr>");
 					
+					
+					String numeroAnterior = "0";
+					
 					while (rs.next()) {
-						out.println("<tr>" + "<td>" + rs.getString("idUsuario") + "</td>");
+						String numeroActual = rs.getString("idUsuario");
+						System.out.println("Antes- el numero actual es: " + numeroActual);
+						System.out.println("Antes - el numero anterior es: " + numeroAnterior);
+						out.println("<tr>");
+						
+						if(numeroActual.equals(numeroAnterior)) {
+							out.println("<td>" + rs.getString("idUsuario") + "</td>");
+						}
+						
 						out.println("<td>" + rs.getString("idLibro") + "</td>" + "</tr>");
 						
+						numeroAnterior = numeroActual;
+						System.out.println("Despues- el numero actual es: " + numeroActual);
+						System.out.println("Despues - el numero anterior es: " + numeroAnterior);
 						count++;
 					}
 					
