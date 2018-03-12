@@ -6,12 +6,18 @@
 <title>Pedidos</title>
 </head>
 <body>
-	<h2>¿Qué desea hacer?</h2>
-	<form method="get" action="pedidos">
-		<input type="submit" name="pedidos"  value="Mostrar Pedidos"/>
-	</form>
-	<form method="get" action="eliminar">
-		<input type="submit" name="eliminar"  value="Marcar Pedido Como Enviado"/>
-	</form>
+	<div id="main" class="container">
+		<h2>¿Qué desea hacer?</h2>
+		<form method="get" action="pedidos">
+			<div class="form-group">
+				<input type="submit" name="pedidos" class="form-control" value="Mostrar Pedidos"/>
+			</div>
+		</form>
+		<form method="get" action="eliminar">
+			<div class="form-group">
+				<input type="submit" name="eliminar" class="form-control" value="Marcar Pedido Como Enviado"/>
+			</div>
+		</form>
+	</div>
 </body>
 </html>

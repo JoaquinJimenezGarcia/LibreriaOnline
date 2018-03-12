@@ -50,6 +50,7 @@ public class LoginServlet extends HttpServlet {
 			out.println("<title>Login</title>");
 			out.println("</head>");
 			out.println("<body>");
+			out.println("<div id=\"main\" class=\"container\">");
 			out.println("<h2>Panel Administración</h2>");
 			
 			conn = pool.getConnection();
@@ -87,10 +88,10 @@ public class LoginServlet extends HttpServlet {
 					}
 					
 					out.println("<p>Hola, " + usuario + "!</p>");
-					out.println("<p><a href='libros.html'>Libros</a></p>");
-					out.println("<p><a href='autores.html'>Autores</a></p>");
-					out.println("<p><a href='editoriales.html'>Editoriales</a></p>");
-					out.println("<p><a href='pedidos.html'>Pedidos</a></p>");
+					out.println("<a href=\"libros.html\"><button type=\"button\" class=\"btn btn-primary\">Libros</button></a>");
+					out.println("<a href=\"autores.html\"><button type=\"button\" class=\"btn btn-primary\">Autores</button></a>");
+					out.println("<a href=\"editoriales.html\"><button type=\"button\" class=\"btn btn-primary\">Editoriales</button></a>");
+					out.println("<a href=\"pedidos.html\"><button type=\"button\" class=\"btn btn-primary\">Pedidos</button></a>");
 				}
 			}
 			
@@ -100,6 +101,7 @@ public class LoginServlet extends HttpServlet {
 			out.println("<p>Servicio no disponible</p>");
 			out.println(ex);
 			out.println("</body>");
+			out.println("</div>");
 			out.println("</html>");
 			Logger.getLogger(LoginServlet.class.getName(), null).log(Level.SEVERE, null, ex);
 		} finally {

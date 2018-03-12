@@ -71,6 +71,7 @@ public class AutoresServlet extends HttpServlet {
 			out.println("<title>Autores</title>");
 			out.println("</head>");
 			out.println("<body>");
+			out.println("<div id=\"main\" class=\"container\">");
 			out.println("<h2>Lista de Autores</h2>");
 		
 			String usuario;
@@ -98,22 +99,27 @@ public class AutoresServlet extends HttpServlet {
 					out.println("<html>");
 					out.println("<head><title>Autores</title></head>");
 					out.println("<body>");
+					out.println("<link rel=\"stylesheet\" href=\"https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css\" integrity=\"sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm\" crossorigin=\"anonymous\">");
 					
 					ResultSet rs = stmt.executeQuery(sqlStr);
 					int count = 0;
 					
 					out.println("<a href=\"autores.html\">Volver</a>");
-					out.println("<table border=\"1\">");
+					out.println("<table class=\"table\">");
+					out.println("<thead class=\"thead-dark\">");
 					out.println("<tr>");
-					out.println("<th>ID</th>");
-					out.println("<th>Nombre</th>");
-					out.println("<th>Fecha de Alta</th>");
+					out.println("<th scope=\"col\">ID</th>");
+					out.println("<th scope=\"col\">Nombre</th>");
+					out.println("<th scope=\"col\">Fecha de Alta</th>");
 					out.println("</tr>");
+					out.println("</thead>");
 					
 					while (rs.next()) {
+						out.println("<tbody>");
 						out.println("<tr>" + "<td>" + rs.getString("idAutor") + "</td>");
 						out.println("<td>" + rs.getString("NombreAutor")  + "</td>");
 						out.println("<td>" + rs.getString("FechaAltaAutor") + "</td>" + "</tr>");
+						out.println("</tbody>");
 						
 						count++;
 					}
@@ -129,6 +135,7 @@ public class AutoresServlet extends HttpServlet {
 			out.println("</html>");
 		}catch (SQLException ex) {
 			out.println("<p>Servicio no disponible</p>");
+			out.println("</div>");
 			out.println("</body>");
 			out.println("</html>");
 			

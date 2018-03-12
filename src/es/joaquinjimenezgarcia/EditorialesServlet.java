@@ -71,6 +71,7 @@ public class EditorialesServlet extends HttpServlet {
 			out.println("<title>Editoriales</title>");
 			out.println("</head>");
 			out.println("<body>");
+			out.println("<div id=\"main\" class=\"container\">");
 			out.println("<h2>Lista de Editoriales</h2>");
 		
 			String usuario;
@@ -98,17 +99,20 @@ public class EditorialesServlet extends HttpServlet {
 					out.println("<html>");
 					out.println("<head><title>Editoriales</title></head>");
 					out.println("<body>");
+					out.println("<div id=\"main\" class=\"container\">");
 					
 					ResultSet rs = stmt.executeQuery(sqlStr);
 					int count = 0;
 					
 					out.println("<a href=\"editoriales.html\">Volver</a>");
-					out.println("<table border=\"1\">");
+					out.println("<table class=\"table\">");
+					out.println("<thead class=\"thead-dark\">");
 					out.println("<tr>");
-					out.println("<th>ID</th>");
-					out.println("<th>Nombre</th>");
-					out.println("<th>Fecha de Alta</th>");
+					out.println("<th scope=\"col\">ID</th>");
+					out.println("<th scope=\"col\">Nombre</th>");
+					out.println("<th scope=\"col\">Fecha de Alta</th>");
 					out.println("</tr>");
+					out.println("</thead>");
 					
 					while (rs.next()) {
 						out.println("<tr>" + "<td>" + rs.getString("idEditorial") + "</td>");
@@ -125,10 +129,12 @@ public class EditorialesServlet extends HttpServlet {
 				}
 			}
 			
+			out.println("</div>");
 			out.println("</body>");
 			out.println("</html>");
 		}catch (SQLException ex) {
 			out.println("<p>Servicio no disponible</p>");
+			out.println("</div>");
 			out.println("</body>");
 			out.println("</html>");
 			
