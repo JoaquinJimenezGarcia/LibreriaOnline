@@ -72,6 +72,7 @@ public class MostrarLibrosServlet extends HttpServlet {
 			out.println("<title>Libros</title>");
 			out.println("</head>");
 			out.println("<body>");
+			out.println("<div id=\"main\" class=\"container\">");
 			out.println("<h2>¿Qué desea hacer?</h2>");
 		
 			String usuario;
@@ -99,17 +100,20 @@ public class MostrarLibrosServlet extends HttpServlet {
 					out.println("<html>");
 					out.println("<head><title>Libros</title></head>");
 					out.println("<body>");
+					out.println("<div id=\"main\" class=\"container\">");
 					
 					ResultSet rs = stmt.executeQuery(sqlStr);
 					int count = 0;
 					
 					out.println("<a href=\"libros.html\">Volver</a>");
-					out.println("<table border=\"1\">");
+					out.println("<table class=\"table\">");
+					out.println("<thead class=\"thead-dark\">");
 					out.println("<tr>");
 					out.println("<th>Título</th>");
 					out.println("<th>Precio</th>");
 					out.println("<th>Cantidad</th>");
 					out.println("</tr>");
+					out.println("</thead>");
 					
 					while (rs.next()) {
 						out.println("<tr>" + "<td>" + rs.getString("TituloLibro") + "</td>");
@@ -126,10 +130,12 @@ public class MostrarLibrosServlet extends HttpServlet {
 				}
 			}
 			
+			out.println("</div>");
 			out.println("</body>");
 			out.println("</html>");
 		}catch (SQLException ex) {
 			out.println("<p>Servicio no disponible</p>");
+			out.println("</div>");
 			out.println("</body>");
 			out.println("</html>");
 			

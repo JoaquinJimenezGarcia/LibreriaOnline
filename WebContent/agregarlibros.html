@@ -6,25 +6,31 @@
 <title>Agregar Libros</title>
 </head>
 <body>
-	<h1>Añadir libro nuevo</h1>
-	<form method="get" action="agregar">
-		<p>Título:</p>
-		<input type="text" name="titulo" id="titulo" required/>
-		<br>
-		<p>Precio:</p>
-		<input type="number" name="precio" id="precio" required/>
-		<br>
-		<p>Cantidad:</p>
-		<input type="number" name="cantidad" id="cantidad" required/>
-		<br>
-		<p>ID Autor:</p>
-		<input type="number" name="idAutor" id="idAutor" required/>
-		<br>
-		<p>ID Editorial:</p>
-		<input type="number" name="idEditorial" id="idEditorial" required/>
-		<br>
-		<br>
-		<input type="submit" name="agregar"  value="Añadir"/>
-	</form>
+	<div id="main" class="container">
+		<h1>Añadir libro nuevo</h1>
+		<form method="get" action="agregar">
+			<div class="form-group">
+		    		<label for="titulo">Titulo:</label>
+		    		<input type="text" name="titulo" class="form-control" id="titulo" placeholder="Titulo del libro..." required>
+		  	</div>
+			<div class="form-group">
+		    		<label for="precio">Precio:</label>
+		    		<input type="text" name="precio" class="form-control" id="precio" placeholder="Precio del libro..." required>
+		  	</div>
+			<div class="form-group">
+		    		<label for="cantidad">Cantidad:</label>
+		    		<input type="number" name="cantidad" class="form-control" id="cantidad" placeholder="Cantidad del libro..." required>
+		  	</div>
+			<div class="form-group">
+		    		<label for="idAutor">ID Autor:</label>
+		    		<input type="number" name="idAutor" class="form-control" id="idAutor" placeholder="Autor del libro..." required>
+		  	</div>
+			<div class="form-group">
+		    		<label for="idEditorial">ID Editorial:</label>
+		    		<input type="number" name="idEditorial" class="form-control" id="idEditorial" placeholder="Editorial del libro..." required>
+		  	</div>
+		  	<button type="submit" name="agregar" class="btn btn-primary">Añadir</button>
+		</form>
+	</div>
 </body>
 </html>
