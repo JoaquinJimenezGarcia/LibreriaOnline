@@ -6,6 +6,8 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 
 import javax.naming.InitialContext;
@@ -71,6 +73,7 @@ public class MostrarPedidosServlet extends HttpServlet {
 			out.println("<title>Pedidos</title>");
 			out.println("</head>");
 			out.println("<body>");
+			out.println("<div id=\"main\" class=\"container\">");
 			out.println("<h2>¿Qué desea hacer?</h2>");
 		
 			String usuario;
@@ -93,30 +96,31 @@ public class MostrarPedidosServlet extends HttpServlet {
 				
 				try {
 					stmt = (Statement) conn.createStatement();
-					String sqlStr = "SELECT idPedido, idUsuario, idLibro FROM Pedido";
+					String sqlStr = "SELECT idUsuario, idLibro, Cantidad FROM Pedido";
 					
 					out.println("<html>");
 					out.println("<head><title>Pedidos</title></head>");
 					out.println("<body>");
+					out.println("<div id=\"main\" class=\"container\">");
 					
 					ResultSet rs = stmt.executeQuery(sqlStr);
 					int count = 0;
 					
 					out.println("<a href=\"pedidos.html\">Volver</a>");
-					out.println("<table border=\"1\">");
+					out.println("<table class=\"table\">");
+					out.println("<thead class=\"thead-dark\">");
 					out.println("<tr>");
 					out.println("<th>Cliente</th>");
 					out.println("<th>Libro</th>");
 					out.println("<th>Cantidad</th>");
 					out.println("</tr>");
-					
+					out.println("</thead>");
 					
 					String numeroAnterior = "0";
 					
 					while (rs.next()) {
 						String numeroActual = rs.getString("idUsuario");
-						System.out.println("Antes- el numero actual es: " + numeroActual);
-						System.out.println("Antes - el numero anterior es: " + numeroAnterior);
+						
 						out.println("<tr>");
 						
 						if(!numeroActual.equals(numeroAnterior)) {
@@ -127,16 +131,9 @@ public class MostrarPedidosServlet extends HttpServlet {
 						}
 						
 						out.println("<td>" + rs.getString("idLibro") + "</td>");
-						
-						if(true) {
-							out.println("<td>" + 1 + "</td>" + "</tr>");
-						} else {
-							out.println("<td>" + 1 + "</td>" + "</tr>");
-						}
+						out.println("<td>" + rs.getString("Cantidad") + "</td>" + "</tr>");
 						
 						numeroAnterior = numeroActual;
-						System.out.println("Despues- el numero actual es: " + numeroActual);
-						System.out.println("Despues - el numero anterior es: " + numeroAnterior);
 					}
 					
 					out.println("</table>");
@@ -146,10 +143,12 @@ public class MostrarPedidosServlet extends HttpServlet {
 				}
 			}
 			
+			out.println("</div>");
 			out.println("</body>");
 			out.println("</html>");
 		}catch (SQLException ex) {
 			out.println("<p>Servicio no disponible</p>");
+			out.println("</div>");
 			out.println("</body>");
 			out.println("</html>");
 			
