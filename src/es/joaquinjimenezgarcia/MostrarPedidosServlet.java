@@ -107,6 +107,7 @@ public class MostrarPedidosServlet extends HttpServlet {
 					out.println("<tr>");
 					out.println("<th>Cliente</th>");
 					out.println("<th>Libro</th>");
+					out.println("<th>Cantidad</th>");
 					out.println("</tr>");
 					
 					
@@ -118,16 +119,24 @@ public class MostrarPedidosServlet extends HttpServlet {
 						System.out.println("Antes - el numero anterior es: " + numeroAnterior);
 						out.println("<tr>");
 						
-						if(numeroActual.equals(numeroAnterior)) {
+						if(!numeroActual.equals(numeroAnterior)) {
 							out.println("<td>" + rs.getString("idUsuario") + "</td>");
+							count++;
+						} else {
+							out.println("<td></td>");
 						}
 						
-						out.println("<td>" + rs.getString("idLibro") + "</td>" + "</tr>");
+						out.println("<td>" + rs.getString("idLibro") + "</td>");
+						
+						if(true) {
+							out.println("<td>" + 1 + "</td>" + "</tr>");
+						} else {
+							out.println("<td>" + 1 + "</td>" + "</tr>");
+						}
 						
 						numeroAnterior = numeroActual;
 						System.out.println("Despues- el numero actual es: " + numeroActual);
 						System.out.println("Despues - el numero anterior es: " + numeroAnterior);
-						count++;
 					}
 					
 					out.println("</table>");
