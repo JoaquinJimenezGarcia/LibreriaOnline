@@ -33,6 +33,10 @@
     <servlet-name>MostrarPedidosServlet</servlet-name>
     <servlet-class>es.joaquinjimenezgarcia.MostrarPedidosServlet</servlet-class>
   </servlet>
+  <servlet>
+  	<servlet-name>LogoutServlet</servlet-name>
+ 	<servlet-class>es.joaquinjimenezgarcia.LogoutServlet</servlet-class>
+  </servlet>
   <servlet-mapping>
     <servlet-name>LoginServlet</servlet-name>
     <url-pattern>/login</url-pattern>
@@ -57,4 +61,8 @@
     <servlet-name>MostrarPedidosServlet</servlet-name>
     <url-pattern>/pedidos</url-pattern>
   </servlet-mapping>
+  <servlet-mapping>
+ 	<servlet-name>LogoutServlet</servlet-name>
+ 	<url-pattern>/logout</url-pattern>
+ </servlet-mapping>
 </web-app>
