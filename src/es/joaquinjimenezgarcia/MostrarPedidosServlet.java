@@ -99,7 +99,8 @@ public class MostrarPedidosServlet extends HttpServlet {
 					String sqlStr = "SELECT Pedido.idUsuario, Pedido.idLibro, Libro.idLibro, Libro.TituloLibro, Pedido.Cantidad, Usuario.idUsuario, Usuario.NombreUsuario "
 							+ "FROM Pedido, Usuario, Libro "
 							+ "WHERE Usuario.idUsuario = Pedido.idUsuario "
-							+ "AND Pedido.idLibro = Libro.idLibro";
+							+ "AND Pedido.idLibro = Libro.idLibro "
+							+ "AND Pedido.enviado = 0";
 					
 					out.println("<html>");
 					out.println("<head><title>Pedidos</title></head>");
