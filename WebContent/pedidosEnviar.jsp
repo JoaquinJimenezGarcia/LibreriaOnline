@@ -13,16 +13,16 @@
 		<form method="get" action="enviado">
 			<div class="form-group">
 		    		<label for="marcar">Pedido a Marcar Como Enviado...</label>
-			    <select class="form-control" id="marcar">
+			    <select class="form-control" id="marcar" name="marcar">
 			    		<%@ page import = "java.sql.*" %>
 			    		
 			    		<%
-
+			    		
 						Class.forName("com.mysql.jdbc.Driver");
 						
-		    				String userName = "USER";
-						String password = "PASSWORD";
-						String url = "jdbc:mysql://DB_IP:PORT/DB_NAME";
+		    				String userName = "USUARIO";
+						String password = "CLAVE";
+						String url = "jdbc:mysql://IP_DB:PUERTO/NOMBRE_DB";
 						
 						Connection conn = DriverManager.getConnection(url, userName, password);
 						Statement stmt = conn.createStatement();
@@ -43,9 +43,8 @@
 							if(!numeroActual.equals(numeroAnterior)) {
 							
 					%>
-			    		
 			        <option>Pedido de <%=rs.getString("Usuario.NombreUsuario")%> --- nº <%=rs.getString("Pedido.numeroPedido")%></option>
-			        
+			       
 			        <%
 							} 
 							
