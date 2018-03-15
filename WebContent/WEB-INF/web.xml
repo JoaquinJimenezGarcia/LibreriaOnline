@@ -34,8 +34,12 @@
     <servlet-class>es.joaquinjimenezgarcia.MostrarPedidosServlet</servlet-class>
   </servlet>
   <servlet>
-  	<servlet-name>LogoutServlet</servlet-name>
- 	<servlet-class>es.joaquinjimenezgarcia.LogoutServlet</servlet-class>
+    <servlet-name>LogoutServlet</servlet-name>
+    <servlet-class>es.joaquinjimenezgarcia.LogoutServlet</servlet-class>
+  </servlet>
+  <servlet>
+    <servlet-name>MarcarPedidoComoEnviadoServlet</servlet-name>
+    <servlet-class>es.joaquinjimenezgarcia.MarcarPedidoComoEnviadoServlet</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>LoginServlet</servlet-name>
@@ -62,7 +66,11 @@
     <url-pattern>/pedidos</url-pattern>
   </servlet-mapping>
   <servlet-mapping>
- 	<servlet-name>LogoutServlet</servlet-name>
- 	<url-pattern>/logout</url-pattern>
- </servlet-mapping>
+    <servlet-name>LogoutServlet</servlet-name>
+    <url-pattern>/logout</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>MarcarPedidoComoEnviadoServlet</servlet-name>
+    <url-pattern>/enviado</url-pattern>
+  </servlet-mapping>
 </web-app>
