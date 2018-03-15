@@ -96,7 +96,10 @@ public class MostrarPedidosServlet extends HttpServlet {
 				
 				try {
 					stmt = (Statement) conn.createStatement();
-					String sqlStr = "SELECT idUsuario, idLibro, Cantidad FROM Pedido";
+					String sqlStr = "SELECT Pedido.idUsuario, Pedido.idLibro, Libro.idLibro, Libro.TituloLibro, Pedido.Cantidad, Usuario.idUsuario, Usuario.NombreUsuario "
+							+ "FROM Pedido, Usuario, Libro "
+							+ "WHERE Usuario.idUsuario = Pedido.idUsuario "
+							+ "AND Pedido.idLibro = Libro.idLibro";
 					
 					out.println("<html>");
 					out.println("<head><title>Pedidos</title></head>");
@@ -124,13 +127,13 @@ public class MostrarPedidosServlet extends HttpServlet {
 						out.println("<tr>");
 						
 						if(!numeroActual.equals(numeroAnterior)) {
-							out.println("<td>" + rs.getString("idUsuario") + "</td>");
+							out.println("<td>" + rs.getString("Usuario.NombreUsuario") + "</td>");
 							count++;
 						} else {
 							out.println("<td></td>");
 						}
 						
-						out.println("<td>" + rs.getString("idLibro") + "</td>");
+						out.println("<td>" + rs.getString("Libro.TituloLibro") + "</td>");
 						out.println("<td>" + rs.getString("Cantidad") + "</td>" + "</tr>");
 						
 						numeroAnterior = numeroActual;
