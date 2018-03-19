@@ -20,9 +20,9 @@
 			    		
 						Class.forName("com.mysql.jdbc.Driver");
 						
-		    				String userName = "USUARIO";
-						String password = "CLAVE";
-						String url = "jdbc:mysql://IP_DB:PUERTO/NOMBRE_DB";
+		    				String userName = "root";
+						String password = "root";
+						String url = "jdbc:mysql://localhost:8889/LibreriaOnline";
 						
 						Connection conn = DriverManager.getConnection(url, userName, password);
 						Statement stmt = conn.createStatement();
@@ -31,7 +31,8 @@
 							+ "FROM Pedido, Usuario, Libro "
 							+ "WHERE Usuario.idUsuario = Pedido.idUsuario "
 							+ "AND Pedido.idLibro = Libro.idLibro "
-							+ "AND Pedido.enviado = 0";
+							+ "AND Pedido.enviado = 0 "
+							+ "ORDER BY Pedido.idPedido";
 						
 						ResultSet rs = stmt.executeQuery(sqlStr);
 						

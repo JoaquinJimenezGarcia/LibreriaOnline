@@ -96,11 +96,12 @@ public class MostrarPedidosServlet extends HttpServlet {
 				
 				try {
 					stmt = (Statement) conn.createStatement();
-					String sqlStr = "SELECT Pedido.numeroPedido, Pedido.idUsuario, Pedido.idLibro, Libro.idLibro, Libro.TituloLibro, Pedido.Cantidad, Usuario.idUsuario, Usuario.NombreUsuario "
+					String sqlStr = "SELECT Pedido.idPedido, Pedido.numeroPedido, Pedido.idUsuario, Pedido.idLibro, Libro.idLibro, Libro.TituloLibro, Pedido.Cantidad, Usuario.idUsuario, Usuario.NombreUsuario "
 							+ "FROM Pedido, Usuario, Libro "
 							+ "WHERE Usuario.idUsuario = Pedido.idUsuario "
 							+ "AND Pedido.idLibro = Libro.idLibro "
-							+ "AND Pedido.enviado = 0";
+							+ "AND Pedido.enviado = 0 "
+							+ "ORDER BY Pedido.idPedido";
 					
 					out.println("<html>");
 					out.println("<head><title>Pedidos</title></head>");
@@ -151,6 +152,7 @@ public class MostrarPedidosServlet extends HttpServlet {
 					out.println("<p>" + count + " pedidos encontrados.</p>");
 				} catch (Exception ex) {
 					ex.printStackTrace();
+					System.out.print(ex);
 				}
 			}
 			
